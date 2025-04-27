@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Access Server</title>
+</head>
+<body>
+  <h1>Welcome to the Server Access Page!</h1>
+  <p>Current Server URL: <a id="ngrok-link" href="#">Loading...</a></p>
+
+  <!-- Contact Form for Email -->
+  <h2>Contact Us</h2>
+  <form id="contact-form" method="POST" action="mailto:your-email@gmail.com" enctype="text/plain">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <label for="message">Message:</label><br>
+    <textarea id="message" name="message" required></textarea><br><br>
+
+    <button type="submit">Send Message</button>
+  </form>
+
+  <script>
+    async function updateLink() {
+      try {
+        const response = await fetch('https://github.com/quark365/Grovia-N/link.json?' + Date.now());
+        const data = await response.json();
+        const linkElement = document.getElementById('ngrok-link');
+        linkElement.href = data.url;
+        linkElement.textContent = data.url;
+      } catch (error) {
+        console.error('Error fetching latest link:', error);
+      }
+    }
+
+    updateLink();
+    setInterval(updateLink, 10000); // Update every 10 seconds
+  </script>
+</body>
+</html>
